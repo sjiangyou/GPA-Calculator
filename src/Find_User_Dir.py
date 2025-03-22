@@ -1,14 +1,22 @@
 import os
+import pathlib
 
 
-def find(folder) -> str:
+def find(class_name):
+    classes_dir = str(pathlib.Path(__file__).parent.parent / "Classes")
+    os.chdir(classes_dir)
     try:
-        os.chdir(os.path.expanduser(f"Classes/{folder}"))
-        return os.path.join(os.getcwd(), "")
+        os.chdir(class_name)
+        return os.getcwd()
     except FileNotFoundError:
-        for root, dirs, files in os.walk(os.path.expanduser("~")):
-            if root.endswith("Grades/src"):
-                return os.path.join(root[:-4], "")
+        if os.name == "posix":
+            os.system(f"cp -r Template {class_name}")
+            os.chdir(class_name)
+            return os.getcwd()
+        if os.name == "nt":
+            os.system(f"copy Template {class_name} /E /I")
+            os.chdir(class_name)
+            return os.getcwd()
 
 
 if __name__ == "__main__":
