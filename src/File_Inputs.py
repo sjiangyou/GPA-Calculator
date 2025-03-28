@@ -22,4 +22,6 @@ def calculate_category(category):
             fields = line.strip().split(",")
             earned_points += float(fields[1])
             total_points += float(fields[2])
+        if total_points == 0:
+            return 0
         return earned_points / total_points
