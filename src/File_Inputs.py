@@ -23,5 +23,5 @@ def calculate_category(category):
             earned_points += float(fields[1])
             total_points += float(fields[2])
         if total_points == 0:
-            return 0
+            return -1
         return earned_points / total_points

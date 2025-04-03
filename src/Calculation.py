@@ -11,7 +11,11 @@ def main():
     earned_points = 0
     for category in categories.items():
         category_points = calculate_category(category[0])
-        earned_points += category_points * (float(category[1][0]) / total_points)
+        if category_points == -1:
+            total_points -= float(category[1][0]) if category[1][1] else 0
+            continue
+        earned_points += category_points * float(category[1][0])
+    earned_points /= total_points
     print(f"Grade: {earned_points}")
     with open("GPA.txt", "w", encoding="utf-8") as file:
         file.write(f"{earned_points * 100} ({convert_to_letter(earned_points)})")
