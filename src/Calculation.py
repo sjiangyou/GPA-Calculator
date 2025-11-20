@@ -20,6 +20,7 @@ def main():
     with open("GPA.txt", "w", encoding="utf-8") as file:
         file.write(f"{earned_points * 100} ({convert_to_letter(earned_points)})")
 
+
 def convert_to_letter(gpa):
     if gpa >= 0.9:
         return "A"
