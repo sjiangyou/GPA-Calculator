@@ -1,14 +1,15 @@
 import os
 
 
-def read_grade_categories() -> dict:
+def read_grade_categories():
     with open("Grade_Categories.csv", "r", encoding="utf-8") as file:
         categories = {}
         for idx, line in enumerate(file):
             if idx == 0:
                 continue
             fields = line.strip().split(",")
-            categories[fields[0]] = fields[1], not eval(fields[2])
+            curves = tuple(float(x) for x in fields[3:])
+            categories[fields[0]] = fields[1], not eval(fields[2]), curves
         return categories
 
 

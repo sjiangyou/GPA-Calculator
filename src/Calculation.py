@@ -17,18 +17,32 @@ def main():
         earned_points += category_points * float(category[1][0])
     earned_points /= total_points
     print(f"Grade: {earned_points}")
+    limits = calculate_grade_limits(categories)
+    print(f"Cutoffs: {limits}")
     with open("GPA.txt", "w", encoding="utf-8") as file:
-        file.write(f"{earned_points * 100} ({convert_to_letter(earned_points)})")
+        file.write(
+            f"{earned_points * 100} ({convert_to_letter(earned_points, limits)})"
+        )
 
 
-def convert_to_letter(gpa):
-    if gpa >= 0.9:
+def calculate_grade_limits(categories):
+    limits = {"A": 0, "B": 0, "C": 0, "D": 0}
+    for category in categories.values():
+        if not category[1]:
+            continue
+        for curve in zip(["A", "B", "C", "D"], category[2][1:]):
+            limits[curve[0]] += curve[1] * float(category[0]) / category[2][0]
+    return limits
+
+
+def convert_to_letter(gpa, limits):
+    if gpa >= limits["A"] / 100:
         return "A"
-    if gpa >= 0.8:
+    if gpa >= limits["B"] / 100:
         return "B"
-    if gpa >= 0.7:
+    if gpa >= limits["C"] / 100:
         return "C"
-    if gpa >= 0.6:
+    if gpa >= limits["D"] / 100:
         return "D"
     return "F"
 
