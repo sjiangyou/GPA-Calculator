@@ -27,11 +27,19 @@ def main():
 
 def calculate_grade_limits(categories):
     limits = {"A": 0, "B": 0, "C": 0, "D": 0}
-    for category in categories.values():
+    total_points = sum(float(fields[0]) for fields in categories.values() if fields[1])
+    for category in categories.items():
+        name, category = category
         if not category[1]:
             continue
+        if calculate_category(name) == -1:
+            total_points -= float(category[0])
+            continue
         for curve in zip(["A", "B", "C", "D"], category[2][1:]):
-            limits[curve[0]] += curve[1] * float(category[0]) / category[2][0]
+            limits[curve[0]] += float(category[0]) * curve[1] / category[2][0]
+    for key in limits:
+        limits[key] /= total_points
+        limits[key] *= 100
     return limits
 
 
