@@ -38,8 +38,14 @@ def make_class_categories():
 def make_category_curves():
     final_file = ""
     with open("Grade_Categories.csv", "r", encoding="utf-8") as file:
+        needs_curves = True
         for idx, line in enumerate(file):
             original = line[:-1]
+            if original.find("Scale") != -1:
+                needs_curves = False
+            if not needs_curves:
+                final_file += f"{original}\n"
+                continue
             if idx == 0:
                 additional = ",Scale,A,B,C,D"
             else:
