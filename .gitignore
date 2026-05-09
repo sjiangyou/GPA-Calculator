@@ -6,3 +6,4 @@ pyvenv.cfg
 Classes/*
 !Classes/template/
 */__pycache__/
+.envrc
