@@ -6,7 +6,7 @@ def create_categories_file():
     category, points, extra = "start", "0", "False"
     try:
         with open("Grade_Categories.csv", "x", encoding="utf-8") as file:
-            file.write("Category,Weight,Extra\n")
+            file.write("Category,Weight,Extra,Scale,A,B,C,D\n")
     except FileExistsError:
         pass
     while category.lower() != "done":
@@ -16,7 +16,7 @@ def create_categories_file():
         points = input(f"Points for {category}: ")
         extra = input(f"Is {category} extra credit? (True/False): ")
         with open("Grade_Categories.csv", "a", encoding="utf-8") as file:
-            file.write(f"{category},{points},{extra}\n")
+            file.write(f"{category},{points},{extra},100,90,80,70,60\n")
 
 
 def make_class_categories():
